@@ -1,0 +1,59 @@
+<!-- Anton Shashok Property. The usage of my code under my name is rejected -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Facebook like only button</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/like_only_btn.css">
+        <script>
+            var getURLData = function(dname, defdata) {
+                var regd = new RegExp("(&|#)" + dname + "=(.*?)(&|$)", "i");
+                return regd.test(window.location.href) ? decodeURIComponent(regd.exec(window.location.href)[2]) : "defdata"; 
+            };
+            
+            var text = getURLData("text", "like me btn");
+            var locale = getURLData("locale", "en_US");
+            var appID = getURLData("appID", "");
+            var urltolike = getURLData("urltolike", "");
+        </script>
+    </head>
+    <body>
+        <div class="contents">
+            <div class="pseudo">
+                <div>
+                    <div id="fb-root"></div>
+                    <script>(function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id))
+                                return;
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "//connect.facebook.net/" + locale + "/sdk.js#xfbml=1&appId=" +  appID + "&version=v2.0";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }(document, 'script', 'facebook-jssdk'));</script>
+                    <iframe scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:80px;" allowTransparency="true"></iframe>
+                    <script>
+                        $("iframe").attr("src", "//www.facebook.com/plugins/like.php?href=" + urltolike + "&amp;width&amp;layout=button&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=80&amp;appId=" + appID)
+                    </script>
+                </div>
+            </div>
+            <div class="btn btn-success">
+                <script>
+                    document.write(text);
+                </script>
+            </div>
+        </div>
+        <script>
+            $(".btn").css({
+                'line-height': $(window).height() + "px"
+            });
+            var x = $(window).width() / 20;
+            var y = $(window).height() / 20;
+            $(".pseudo > div").attr("style", "-webkit-transform: scale(" + x + "," + y + ");-moz-transform: scale(" + x + "," + y + "); transform: scale" + x + "," + y + ");");
+        </script>
+    </body>
+</html>
